@@ -27,6 +27,18 @@
         font-size: 150%;
     }
 
+        /* Das braucht man aktuell eigentlich nicht. War ein langer Prozess...*/
+    main .bild {
+        
+        width: 100%; 
+        height: auto; 
+
+    }
+
+    img {
+        width: 100%; 
+    }
+
     /* AKTIONSBUTTONS */
     main .actions {
         display: flex;
@@ -56,6 +68,9 @@
         background-color: #f0f0f0;
         cursor: pointer;
     }
+
+    
+
 </style>
 
 <!-- Inhalt der Seite -->
@@ -71,7 +86,11 @@
         <!-- Vorlage für einen Eintrag in der Liste -->
         <li class="list-entry" data-id="$ID$">
             <div class="name">
-                $FIRST_NAME$
+                $FIRST_NAME$ 
+                
+            </div>
+            <div class = "bild">
+                    $BILD$
             </div>
             
             <div class="actions">

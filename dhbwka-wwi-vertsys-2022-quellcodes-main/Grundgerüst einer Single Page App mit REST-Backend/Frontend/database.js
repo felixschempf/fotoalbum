@@ -6,7 +6,10 @@ export default class Database {
      */
     constructor() {
         this._data = [];
+
+
     }
+
 
     /**
      * Tatsächliche Initialisierung der Datenbank. Dies findet hier in einer
@@ -21,47 +24,43 @@ export default class Database {
         // Sie hier die Datensätze komplett einlesen und wiederherstellen.
         this._data = JSON.parse(localStorage.getItem("database"));
 
-        if (!this._data || !this._data.length) {
+        if (!this._data || !this._data.length ) {
             this._data = [
                 {
                     id: 1,
-                    first_name: "Willy",
-                    last_name: "Tanner",
-                    phone: "+49 711 564412",
-                    email: "willy.tanner@alf.com",
+                    first_name: "Michael",
+                    bild: "<img src = 'img/Hund1.png'></img>",
+                    
+                   
                 },
                 {
                     id: 2,
                     first_name: "Michael",
-                    last_name: "Knight",
-                    phone: "+49 721 554194",
-                    email: "michael@knight-rider.com",
+                    bild: "<img src = 'img/Hund2.jpg'></img>",
+                    
                 },
                 {
                     id: 3,
                     first_name: "Fox",
-                    last_name: "Mulder",
-                    phone: "+49 721 553181",
-                    email: "mulder@xfiles.com",
+                    bild: "<img src = 'img/Hund3.jpg'></img>",
+                    
                 },
                 {
                     id: 4,
                     first_name: "Dana",
-                    last_name: "Scully",
-                    phone: "+49 721 572287",
-                    email: "scully@xfiles.com",
+                    bild: "<img src = 'img/Hund4.jpg'></img>",
+                    
                 },
                 {
                     id: 5,
                     first_name: "Elwood",
-                    last_name: "Blues",
-                    phone: "+49 721 957338",
-                    email: "elwood@blues-brothers.com",
+                    bild: "<img src = 'img/Hund5.jpg'></img>",
+                    
                 },
             ];
         }
 
-        this._data.sort(this._compareLastnameFirstname);
+        
     }
 
     /**
@@ -105,7 +104,6 @@ export default class Database {
 
         this._data.push(dataset);
 
-        this._data.sort(this._compareLastnameFirstname);
         this._updateLocalStorage();
     }
 
@@ -127,32 +125,6 @@ export default class Database {
     _updateLocalStorage() {
         localStorage.setItem("database", JSON.stringify(this._data));
     }
-
-    /**
-     * Hilfsmethode zum Sortieren der Datenliste. Die Liste wird nach
-     * Nachname und dann nach Vorname sortiert.
-     *
-     * @param  {Object} a Vergleichsdatensatz A
-     * @param  {Object} b Vergleichsdatensatz B
-     * @return {Number} -1, 0 oder 1
-     */
-    _compareLastnameFirstname(a, b) {
-        let a_last_name = a.last_name.toUpperCase();
-        let a_first_name = a.first_name.toUpperCase();
-
-        let b_last_name = b.last_name.toUpperCase();
-        let b_first_name = b.first_name.toUpperCase();
-
-        if (a_last_name < b_last_name) {
-            return -1;
-        } else if (a_last_name > b_last_name) {
-            return 1;
-        } else if (a_first_name < b_first_name) {
-            return -1;
-        } else if (a_first_name > b_first_name) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
+    
+    /** Achtung die Bilder werden aktuell nicht sortiert */
 };

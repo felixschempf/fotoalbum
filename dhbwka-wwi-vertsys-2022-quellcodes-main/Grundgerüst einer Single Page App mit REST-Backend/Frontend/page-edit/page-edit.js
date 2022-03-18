@@ -21,11 +21,13 @@ export default class PageEdit extends Page {
 
         this._dataset = {
             first_name: "",
+            bild: "",
             
         };
 
         // Eingabefelder
         this._firstNameInput = null;
+        this._bild = null; 
         
     }
 
@@ -52,6 +54,7 @@ export default class PageEdit extends Page {
         if (this._editId) {
             this._dataset = await this._app.database.getById(this._editId);
             this._title = `${this._dataset.first_name}`;
+            
         } else {
             this._title = "Adresse hinzufügen";
         }
