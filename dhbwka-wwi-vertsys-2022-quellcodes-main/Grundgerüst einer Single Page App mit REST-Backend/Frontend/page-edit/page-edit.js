@@ -27,7 +27,7 @@ export default class PageEdit extends Page {
 
         // Eingabefelder
         this._firstNameInput = null;
-        this._bild = null; 
+        this._bildInput = null; 
         
     }
 
@@ -56,12 +56,13 @@ export default class PageEdit extends Page {
             this._title = `${this._dataset.first_name}`;
             
         } else {
-            this._title = "Adresse hinzufügen";
+            this._title = "Titel für das Foto hinzufügen";
         }
 
         // Platzhalter im HTML-Code ersetzen
         let html = this._mainElement.innerHTML;
         html = html.replace("$FIRST_NAME$", this._dataset.first_name);
+        html = html.replace("$BILD$", this._dataset.bild);    
         
         this._mainElement.innerHTML = html;
 
@@ -71,7 +72,8 @@ export default class PageEdit extends Page {
 
         // Eingabefelder zur späteren Verwendung merken
         this._firstNameInput = this._mainElement.querySelector("input.first_name");
-        
+        this._bildInput = this._mainElement.querySelector("input.bild");
+
     }
 
     /**
@@ -82,19 +84,32 @@ export default class PageEdit extends Page {
         // Eingegebene Werte prüfen
         this._dataset.id         = this._editId;
         this._dataset.first_name = this._firstNameInput.value.trim();
+        this._dataset.bild = this._bildInput; 
         
 
         if (!this._dataset.first_name) {
-            alert("Geben Sie erst ein Bild ein.");
+            alert("Bitte geben Sie einen Titel für das Bild ein");
             return;
         }
 
-        
+        if (!this._dataset.bild) {
+            alert("Bitte geben Sie ein Bildpfad ein");
+            return;
+        }
 
+        else {
+            this._dataset.bild = "<img src = 'img/" + this._dataset.bild + ".png'></img>";
+            //this._dataset.bild = "<img src = 'img/Hund1.png'></img>"; so funktioniert es
+        }
+        
         // Datensatz speichern
         await this._app.database.save(this._dataset);
-
+        
         // Zurück zur Übersicht
         location.hash = "#/";
     }
+    
 };
+
+//this._dataset.bild = this._dataset.bild.toString;
+    //    this._dataset.bild = document.write('<img src="+ pfad">');
