@@ -84,24 +84,22 @@ export default class PageEdit extends Page {
         // Eingegebene Werte prüfen
         this._dataset.id         = this._editId;
         this._dataset.first_name = this._firstNameInput.value.trim();
-        this._dataset.bild = this._bildInput; 
+        this._dataset.bild = this._bildInput.value.trim(); 
         
-
+        
         if (!this._dataset.first_name) {
             alert("Bitte geben Sie einen Titel für das Bild ein");
             return;
         }
-
+        
         if (!this._dataset.bild) {
             alert("Bitte geben Sie ein Bildpfad ein");
             return;
         }
 
-        else {
-            this._dataset.bild = "<img src = 'img/" + this._dataset.bild + ".png'></img>";
-            //this._dataset.bild = "<img src = 'img/Hund1.png'></img>"; so funktioniert es
-        }
-        
+        // Hier füge ich den Dateipfad zusammen. Es gehen nur Bilder die bereits im img Ordner sind
+        this._dataset.bild = "<img src = 'img/" + this._dataset.bild + ".png'></img>";
+
         // Datensatz speichern
         await this._app.database.save(this._dataset);
         
@@ -111,5 +109,3 @@ export default class PageEdit extends Page {
     
 };
 
-//this._dataset.bild = this._dataset.bild.toString;
-    //    this._dataset.bild = document.write('<img src="+ pfad">');
