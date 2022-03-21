@@ -98,7 +98,7 @@ export default class PageEdit extends Page {
         }
 
         // Hier füge ich den Dateipfad zusammen. Es gehen nur Bilder die bereits im img Ordner sind
-        this._dataset.bild = "<img src = 'img/" + this._dataset.bild + ".png'></img>";
+        this._dataset.bild = "<img src = 'img/" + this._dataset.bild + "'></img>";
 
         // Datensatz speichern
         await this._app.database.save(this._dataset);

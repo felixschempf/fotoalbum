@@ -6,8 +6,6 @@ export default class Database {
      */
     constructor() {
         this._data = [];
-
-
     }
 
 
@@ -29,7 +27,7 @@ export default class Database {
                 {
                     id: 1,
                     first_name: "Michael",
-                    bild: "<img src = 'img/Hund1.png'></img>",
+                    bild: "<img src = 'img/Hund1.jpg'></img>",
                     
                    
                 },
