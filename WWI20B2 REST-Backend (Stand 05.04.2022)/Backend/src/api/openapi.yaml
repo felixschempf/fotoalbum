@@ -1,0 +1,232 @@
+openapi: 3.0.0
+info:
+  title: Adressbuch API
+  version: '1.0'
+  description: 'Die Adressbuch-App nutzt einen REST-Webservice zur Kommunikation mit dem Backend. Diese API definiert den Webservice zum Lesen, Schreiben, Löschen von Einträgen im Adressbuch.'
+  contact:
+    name: Dennis Schulmeister-Zimolong
+    url: 'https://www.wpvs.de'
+    email: dhbw@windows3.de
+  license:
+    name: CC-BY-4.0
+servers:
+  - url: 'http://api.my-addressbook.com'
+paths:
+  /:
+    get:
+      summary: Wurzeladresse des Webservices zum HATEOAS-Abruf seiner Collections
+      tags:
+        - Start
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HATEOAS_Collection'
+      operationId: get
+      description: HATEOAS-Links mit den Collections abrufen
+  ########## ABRUF DER OPENAPI.YAML ###################
+  /openapi.yaml:
+    get:
+      summary: OpenAPI-Spezifikation des Webservices
+      tags:
+        - Start
+      responses:
+        '200':
+          description: OK
+  ###################################################
+  /address:
+    get:
+      summary: Adressen suchen
+      tags:
+        - Adressliste
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Address'
+      operationId: get-address
+      description: Adressen suchen
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: first_name
+          description: Gesuchter Vorname
+        - schema:
+            type: string
+          in: query
+          name: last_name
+          description: Gesuchter Nachname
+        - schema:
+            type: string
+          in: query
+          name: phone
+          description: Gesuchte Telefonnummer
+        - schema:
+            type: string
+          in: query
+          name: email
+          description: Gesuchte E-Mailadresse
+    post:
+      summary: Adresse anlegen
+      tags:
+        - Adressliste
+      responses:
+        '201':
+          description: Created
+          #### WARNING ######
+          headers:
+            location:
+              schema:
+                type: string
+          ###################
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+      operationId: post-address
+      description: Adresse anlegen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+        description: Daten der anzulegenden Adresse
+  '/address/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Adresse lesen
+      tags:
+        - Adresse
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        '404':
+          description: Not Found
+      operationId: get-address-id
+      description: Details zu einer einzelnen Adresse lesen
+    put:
+      summary: Adresse überschreiben
+      tags:
+        - Adresse
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        '404':
+          description: Not Found
+      operationId: put-address-id
+      description: 'Kompletten Adressdatensatz überschreiben. Es können alle Felder geändert werden mit Ausnahme der ID des Datensatzes. Der Versuch, die ID zu ändern, wird vom Server stillschweigend ignoriert. Bei einer PUT-Anfrage muss der komplette zu speichernde Datensatz an den Server geschickt werden inkl. aller Felder, auch denen, die nicht geändert werden sollen.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+    patch:
+      summary: Einzelne Felder ändern
+      tags:
+        - Adresse
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        '404':
+          description: Not Found
+      operationId: patch-address-id
+      description: 'Einzelne Felder einer Adresse überschreiben. Es können alle Felder geändert werden mit Ausnahme der ID des Datensatzes. Der Versuch, die ID zu ändern, wird vom Server stillschweigend ignoriert. Bei einer PATCH-Anfrage genügt es, nur die tatsächlich zu ändernden Felder an den Server zu schicken.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+    delete:
+      summary: Adresse löschen
+      tags:
+        - Adresse
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      operationId: delete-address-id
+components:
+  schemas:
+    Address:
+      title: Address
+      type: object
+      description: Eine Adresse
+      properties:
+        _id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+    HATEOAS_Collection:
+      title: HATEOAS_Collection
+      type: object
+      description: 'Wird von der Startadresse des Webservices genutzt, um eine Liste aller Collections des REST-Webservices zu liefern. Zu jeder Collection wird dokumentiert, wie diese durchsucht und zur Anlage neuer Datensätze verwendet werden kann.'
+      properties:
+        _name:
+          type: string
+        query:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        create:
+          $ref: '#/components/schemas/HATEOAS_Link'
+    HATEOAS_Resource:
+      title: HATEOAS_Resource
+      type: object
+      description: 'HATEOAS-Links eines einzelnen Eintrags (Ressource) des Webservices. Über diese Struktur wird mitgeteilt, wie die Details zu einem Eintrag abgerufen werden können, wie der Eintrag geändert oder gelöscht werden kann.'
+      properties:
+        read:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        update:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        patch:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        delete:
+          $ref: '#/components/schemas/HATEOAS_Link'
+    HATEOAS_Link:
+      title: HATEOAS_Link
+      type: object
+      description: Informationen zu einem einzelnen Link für das HATEOAS-Prinzip.
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+        query_params:
+          type: array
+          items:
+            type: string
+tags:
+  - name: Adresse
+  - name: Adressliste
+  - name: Start
