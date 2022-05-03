@@ -1,20 +1,16 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   title: Speisekarte API
   version: '1.0'
-  description: 'Die Speisekarte-App nutzt einen REST-Webservice zur Kommunikation mit dem Backend. Diese API definiert den Webservice zum Lesen, Schreiben, Löschen von Einträgen in der Speisekarte.'
   contact:
-    name: Dennis Schulmeister-Zimolong
-    url: 'https://www.wpvs.de'
-    email: dhbw@windows3.de
-  license:
-    name: CC-BY-4.0
+    name: Simon Mayer
+    email: mayer-simon1@gmx.de
 servers:
-  - url: 'http://api.my-addressbook.com'
+  - url: 'http://localhost:3000'
 paths:
   /:
     get:
-      summary: Wurzel Speise des Webservices zum HATEOAS-Abruf seiner Collections
+      summary: Wurzeladresse des Webservices
       tags:
         - Start
       responses:
@@ -27,18 +23,27 @@ paths:
                 items:
                   $ref: '#/components/schemas/HATEOAS_Collection'
       operationId: get
-      description: HATEOAS-Links mit den Collections abrufen
-  ########## ABRUF DER OPENAPI.YAML ###################
-  /openapi.yaml:
-    get:
-      summary: OpenAPI-Spezifikation des Webservices
+      description: HATEOAS-Links mit den Collections aufrufen
+  /speise:
+    post:
+      summary: Speise anlegen
       tags:
-        - Start
+        - Speisekarte
       responses:
-        '200':
-          description: OK
-  ###################################################
-  /card:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Speise'
+      operationId: post-speise
+      description: Adresse anlegen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Speise'
+        description: Daten der anzulegenden Speise
     get:
       summary: Speise suchen
       tags:
@@ -59,7 +64,7 @@ paths:
             type: string
           in: query
           name: name_gericht
-          description: Gesuchter Name des Gerichts
+          description: Gesuchter Name
         - schema:
             type: string
           in: query
@@ -70,31 +75,6 @@ paths:
           in: query
           name: gericht_nummer
           description: Gesuchte Nummer
-    post:
-      summary: Speise anlegen
-      tags:
-        - Speisekarte
-      responses:
-        '201':
-          description: Created
-          #### WARNING ######
-          headers:
-            location:
-              schema:
-                type: string
-          ###################
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Speise'
-      operationId: post-speise
-      description: Speise anlegen
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Speise'
-        description: Daten der anzulegenden Speise
   '/speise/{id}':
     parameters:
       - schema:
@@ -116,7 +96,7 @@ paths:
         '404':
           description: Not Found
       operationId: get-speise-id
-      description: Details zu einer einzelnen Speise lesen
+      description: Eine einzele Speise lesen
     put:
       summary: Speise überschreiben
       tags:
@@ -131,7 +111,7 @@ paths:
         '404':
           description: Not Found
       operationId: put-speise-id
-      description: 'Kompletten Adressdatensatz überschreiben. Es können alle Felder geändert werden mit Ausnahme der ID des Datensatzes. Der Versuch, die ID zu ändern, wird vom Server stillschweigend ignoriert. Bei einer PUT-Anfrage muss der komplette zu speichernde Datensatz an den Server geschickt werden inkl. aller Felder, auch denen, die nicht geändert werden sollen.'
+      description: Speise überschreiben
       requestBody:
         content:
           application/json:
@@ -150,8 +130,8 @@ paths:
                 $ref: '#/components/schemas/Speise'
         '404':
           description: Not Found
-      operationId: patch-address-id
-      description: 'Einzelne Felder einer Speise überschreiben. Es können alle Felder geändert werden mit Ausnahme der ID des Datensatzes. Der Versuch, die ID zu ändern, wird vom Server stillschweigend ignoriert. Bei einer PATCH-Anfrage genügt es, nur die tatsächlich zu ändernden Felder an den Server zu schicken.'
+      operationId: patch-speise-id
+      description: Einzelne Felder könne geändert werden
       requestBody:
         content:
           application/json:
@@ -167,10 +147,11 @@ paths:
         '404':
           description: Not Found
       operationId: delete-speise-id
+      description: Löschen einer Speise
 components:
   schemas:
-    Address:
-      title: Address
+    Speise:
+      title: Speise
       type: object
       description: Eine Speise
       properties:
@@ -180,23 +161,12 @@ components:
           type: string
         gericht_preis:
           type: string
-        gericht_nummer:
+        gericht_name:
           type: string
-    HATEOAS_Collection:
-      title: HATEOAS_Collection
-      type: object
-      description: 'Wird von der Star Speise des Webservices genutzt, um eine Liste aller Collections des REST-Webservices zu liefern. Zu jeder Collection wird dokumentiert, wie diese durchsucht und zur Anlage neuer Datensätze verwendet werden kann.'
-      properties:
-        _name:
-          type: string
-        query:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        create:
-          $ref: '#/components/schemas/HATEOAS_Link'
     HATEOAS_Resource:
       title: HATEOAS_Resource
       type: object
-      description: 'HATEOAS-Links eines einzelnen Eintrags (Ressource) des Webservices. Über diese Struktur wird mitgeteilt, wie die Details zu einem Eintrag abgerufen werden können, wie der Eintrag geändert oder gelöscht werden kann.'
+      description: HATEOAS-Links eines einzelnen Eintrags des Webservices
       properties:
         read:
           $ref: '#/components/schemas/HATEOAS_Link'
@@ -209,7 +179,7 @@ components:
     HATEOAS_Link:
       title: HATEOAS_Link
       type: object
-      description: Informationen zu einem einzelnen Link für das HATEOAS-Prinzip.
+      description: Informationen zu einem einzelnen Link
       properties:
         url:
           type: string
@@ -219,6 +189,17 @@ components:
           type: array
           items:
             type: string
+    HATEOAS_Collection:
+      title: HATEOAS_Collection
+      type: object
+      description: 'Wird von der Startadresse genutz, um eine Liste alles Collections des REST-Webservices zu liefern. Zu jeder Collection wird dokumentirt, wie diese durchsucht und zur Anlage neuer Datensätze verwendet werden kann'
+      properties:
+        _name:
+          type: string
+        query:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        create:
+          $ref: '#/components/schemas/HATEOAS_Link'
 tags:
   - name: Speise
   - name: Speisekarte
