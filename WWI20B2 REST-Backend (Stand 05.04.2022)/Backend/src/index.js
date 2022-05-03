@@ -7,7 +7,7 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 //// TODO: Weitere Controller-Klassen importieren ////
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
-import AddressController from "./controller/speise.controller.js";
+import SpeiseController from "./controller/speise.controller.js";
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
