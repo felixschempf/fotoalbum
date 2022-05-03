@@ -4,17 +4,17 @@ info:
   version: '1.0'
   description: 'Die Speisekarte-App nutzt einen REST-Webservice zur Kommunikation mit dem Backend. Diese API definiert den Webservice zum Lesen, Schreiben, Löschen von Einträgen in der Speisekarte.'
   contact:
-    name: Simon Mayer
-    url: '-'
-    email: -
+    name: Dennis Schulmeister-Zimolong
+    url: 'https://www.wpvs.de'
+    email: dhbw@windows3.de
   license:
     name: CC-BY-4.0
 servers:
-  - url: '-'
+  - url: 'http://api.my-addressbook.com'
 paths:
   /:
     get:
-      summary: Wurze Speise des Webservices zum HATEOAS-Abruf seiner Collections
+      summary: Wurzel Speise des Webservices zum HATEOAS-Abruf seiner Collections
       tags:
         - Start
       responses:
