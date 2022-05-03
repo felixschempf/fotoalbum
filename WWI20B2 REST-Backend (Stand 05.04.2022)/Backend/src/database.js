@@ -33,18 +33,20 @@ class DatabaseFactory {
     async _createDemoData() {
         //// TODO: Methode anpassen, um zur eigenen App passende Demodaten anzulegen ////
         //// oder die Methode ggf. einfach löschen und ihren Aufruf oben entfernen.  ////
-        let address = this.database.collection("speise");
+        let address = this.database.collection("address");
 
         if (await address.estimatedDocumentCount() === 0) {
             address.insertMany([
                 {
-                    name_gericht: "Burger",
-                    gericht_preis: "5",
-                    gericht_nummer: "26",
+                    first_name: "Dennis",
+                    last_name: "Schulmeister",
+                    phone: "123456",
+                    email: "dhbw@windows.de",
                 }, {
-                    name_gericht: "Pizza",
-                    gericht_preis: "10",
-                    gericht_nummer: "34",
+                    first_name: "Max",
+                    last_name: "Mustermann",
+                    phone: "456465",
+                    email: "max@mustermann.de",
                 }
             ]);
         }

@@ -1,18 +1,18 @@
 import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
-import SpeiseService from "../service/speise.service.js";
+import AddressService from "../service/address.service.js";
 
 /**
  * HTTP-Handler-Klasse für alle Webservice-Aufrufe rund um die Entität
  * "Address".
  */
-export default class SpeiseController {
+export default class AddressController {
     /**
      * Konstruktor. Hier werden die Handler-Methoden registriert.
      */
     constructor(server, prefix) {
         this._prefix = prefix;
-        this._service = new SpeiseService();
+        this._service = new AddressService();
 
         // Collection: Address (Liste von Adressen)
         server.get(prefix, wrapHandler(this, this.search));
