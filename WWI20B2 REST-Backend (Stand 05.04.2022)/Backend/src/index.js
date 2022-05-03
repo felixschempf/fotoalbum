@@ -90,7 +90,7 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 // HTTP-Handler-Funktionen registrieren
 //// TODO: Weitere Controller-Klassen hinzufügen ////
 new RootController(server, "/", openApiFile);
-new AddressController(server, "/address");
+new SpeiseController(server, "/speise");
 
 // server.get("/", function(req, res, next) {
 //     res.send(200, "Hallo, Welt!");
