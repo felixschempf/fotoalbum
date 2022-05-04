@@ -2,7 +2,7 @@
 
 import restify from "restify";
 import OpenApiEnforcer from "openapi-enforcer";
-import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-middleware";
+
 
 //// TODO: Weitere Controller-Klassen importieren ////
 import DatabaseFactory from "./database.js";

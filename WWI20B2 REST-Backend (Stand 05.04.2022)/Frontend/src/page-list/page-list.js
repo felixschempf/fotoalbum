@@ -31,10 +31,20 @@ export default class PageList extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "Übersicht";
+        this._title = "Speisekarte";
+        
+       
 
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
+        let inhalt = this._app.backend.fetch("GET", "/address");
+        var input = inhalt;
+        function doc(){
+            document.write(input);
+        }
+        console.log("inhalt:")
+        console.log(inhalt)
         //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
+
         //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
     }
 };
