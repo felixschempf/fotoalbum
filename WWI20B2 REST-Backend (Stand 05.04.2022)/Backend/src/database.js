@@ -43,12 +43,7 @@ class DatabaseFactory {
                     phone: "123456",
                     email: "dhbw@windows.de",
                 },{
-                    first_name: "Simon",
-                    last_name: "Mayer",
-                    phone: "0011254",
-                    email: "test@windows.de",
-                },{
-                    first_name: "Max",
+                    first_name: "Heinz",
                     last_name: "Mustermann",
                     phone: "456465",
                     email: "max@mustermann.de",
