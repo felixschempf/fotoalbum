@@ -16,8 +16,8 @@ import { readFile } from "fs/promises";
      * @param {String} prefix Gemeinsamer Prefix aller URLs
      * @param {String} openApiFile Pfad zur OpenAPI-Beschreibung
      */
-    constructor(server, prefix, openApiFile) {
-        this._openApiFile = openApiFile;
+    constructor(server, prefix) {
+        
 
         server.get(prefix, wrapHandler(this, this.index));
         server.get(prefix + "openapi.yaml", wrapHandler(this, this.openApi));

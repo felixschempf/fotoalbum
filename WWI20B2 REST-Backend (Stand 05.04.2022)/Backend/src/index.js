@@ -3,7 +3,6 @@
 import restify from "restify";
 import OpenApiEnforcer from "openapi-enforcer";
 
-
 //// TODO: Weitere Controller-Klassen importieren ////
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
@@ -75,21 +74,11 @@ server.opts("*", (req, res, next) => {
 
 // Anfragen und Antworten gegen die OpenAPI-Spezifikation prüfen und dabei
 // fehlerhafte Anfragen oder Antworten mit einer Exception ablehnen.
-const openApiFile = path.relative("", path.join(__dirname, "api", "openapi.yaml"));
-const openApiValidation = await OpenApiEnforcer(openApiFile, {fullResult: true});
 
-const openApiEnforcer = await OpenApiEnforcer(openApiFile, {
-    hideWarnings: true,
-    componentOptions: {
-        production: process.env.NODE_ENV === "production"
-    },
-});
-
-server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 
 // HTTP-Handler-Funktionen registrieren
 //// TODO: Weitere Controller-Klassen hinzufügen ////
-new RootController(server, "/", openApiFile);
+new RootController(server, "/");
 new AddressController(server, "/address");
 
 // server.get("/", function(req, res, next) {
@@ -124,15 +113,5 @@ server.listen(config.port, config.host, function() {
     console.log("  » HOST:    Hostname oder IP-Addresse, auf welcher der Webserver erreichbar ist");
     console.log("  » MONGODB: URL-String mit den Verbindungsdaten zur Mongo-Datenbank");
     console.log();
-    console.log(`OpenAPI-Spezifikation: ${openApiFile}`)
-
-    if (openApiValidation.error) {
-        console.error(`${openApiValidation.error}\n`);
-    }
-
-    if (openApiValidation.warning) {
-        console.warn(`${openApiValidation.warning}\n`);
-    }
-
     console.log();
 });
