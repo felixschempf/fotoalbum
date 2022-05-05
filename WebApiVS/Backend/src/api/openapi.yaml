@@ -1,0 +1,230 @@
+openapi: 3.1.0
+x-stoplight:
+  id: hkyen06uee58f
+info:
+  title: Meal API
+  version: '1.0'
+  description: 'Die Mealcard App nutzt einen REST-Webservice '
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /:
+    get:
+      summary: Wurzeladresse
+      tags:
+        - Start
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HATEOAS_Collection'
+      operationId: get
+      description: HATEOAS-Links mit Collections
+  ########## ABRUF DER OPENAPI.YAML ###################
+  /openapi.yaml:
+    get:
+      summary: OpenAPI-Spezifikation des Webservices
+      tags:
+        - Start
+      responses:
+        '200':
+          description: OK
+  ###################################################
+  /meal:
+    get:
+      summary: Meal suchen
+      tags:
+        - Mealcard
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Meal'
+      operationId: get-meal
+      description: Meal suchen
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: name
+          description: gesuchter Name
+        - schema:
+            type: string
+          in: query
+          name: price
+          description: gesuchter Preis
+        - schema:
+            type: string
+          in: query
+          name: size
+          description: gesuchte Größe
+    post:
+      summary: Meal anlegen
+      tags:
+        - Mealcard
+      responses:
+        '201':
+          description: Created
+          #### WARNING ######
+          headers:
+            location:
+              schema:
+                type: string
+          ###################
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+      operationId: post-meal
+      description: Meal hinzufügen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meal'
+        description: Daten des Meals
+  '/meal/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Meal lesen
+      tags:
+        - Meal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+        '404':
+          description: Not Found
+      operationId: get-meal-id
+      description: Einzelnen Meal lesen
+    put:
+      summary: Meal überschreiben
+      tags:
+        - Meal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+        '404':
+          description: Not Found
+      operationId: put-meal-id
+      description: Meal überschreiben
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meal'
+    patch:
+      summary: Meal ändern
+      tags:
+        - Meal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meal'
+        '404':
+          description: Not Found
+      operationId: patch-meal-id
+      description: Eizelne Felder vom Meal änderen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meal'
+    delete:
+      summary: Meal löschen
+      tags:
+        - Meal
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      operationId: delete-meal-id
+      description: Ein Meal löschen
+components:
+  schemas:
+    Meal:
+      title: Meal
+      x-stoplight:
+        id: vmdftgsmvn05n
+      type: object
+      description: Ein Meal
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        price:
+          type: string
+        size:
+          type: string
+    HATEOAS_Collection:
+      title: HATEOAS_Collection
+      x-stoplight:
+        id: n4l6a8vrnfffw
+      type: object
+      description: Wird von der Startadresse genutzt
+      properties:
+        _name:
+          type: string
+        query:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        create:
+          $ref: '#/components/schemas/HATEOAS_Link'
+    HATEOAS_Resource:
+      title: HATEOAS_Resource
+      x-stoplight:
+        id: nqxvum1mw6ecf
+      type: object
+      description: HATEAOS Links eines Eintrags
+      properties:
+        read:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        update:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        patch:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        delete:
+          $ref: '#/components/schemas/HATEOAS_Link'
+    HATEOAS_Link:
+      title: HATEOAS_Link
+      x-stoplight:
+        id: ih55ryahyfs98
+      type: object
+      description: Infos zu Link über HATEOAS
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+        query_params:
+          type: array
+          items:
+            type: string
+tags:
+  - name: Meal
+  - name: Mealcard
+  - name: Start

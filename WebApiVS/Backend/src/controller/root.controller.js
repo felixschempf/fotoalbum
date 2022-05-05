@@ -16,8 +16,8 @@ import { readFile } from "fs/promises";
      * @param {String} prefix Gemeinsamer Prefix aller URLs
      * @param {String} openApiFile Pfad zur OpenAPI-Beschreibung
      */
-    constructor(server, prefix) {
-        
+    constructor(server, prefix, openApiFile) {
+        this._openApiFile = openApiFile;
 
         server.get(prefix, wrapHandler(this, this.index));
         server.get(prefix + "openapi.yaml", wrapHandler(this, this.openApi));
@@ -31,25 +31,21 @@ import { readFile } from "fs/promises";
     async index(req, res, next) {
         //// TODO: Example-Collection hier durch eigene Collections ersetzen ////
         res.sendResult([
-            {
+            /*{
                 _name: "address",
                 query: {url: "/address", method: "GET", queryParams: ["first_name", "last_name", "phone", "email"]},
                 create: {url: "/address", method: "POST"},
+            },*/
+            {
+                 _name: "meal",
+                 query: {url: "/meal", method: "GET", queryParams: ["name", "price", "size"]},
+                 create: {url: "/meal", method: "POST"},
             },
-            // {
-            //     _name: "user",
-            //     query: {url: "/user", method: "GET", queryParams: ["username"]},
-            //     create: {url: "/user", method: "POST"},
-            // }
         ]);
 
         next();
     }
 
-    /**
-     * GET /openapi.yaml:
-     * Abruf der OpenAPI-Spezifikation
-     */
     async openApi(req, res, next) {
         let filecontent = await readFile(this._openApiFile);
 

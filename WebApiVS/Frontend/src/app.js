@@ -31,13 +31,7 @@ class App {
             {
                 url: ".*",
                 show: () => this._gotoList()
-            },{
-                url: "^/new/$",
-                show: () => this._gotoNew()
-            },{
-                url: "^/edit/(.*)$",
-                show: matches => this._gotoEdit(matches[1]),
-            }
+            },
         ]);
 
         // Fenstertitel merken, um später den Name der aktuellen Seite anzuhängen
@@ -79,21 +73,6 @@ class App {
             this.showException(ex);
         }
     }
-
-    async _gotoNew() {
-        try {
-            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageEdit} = await import("./page-edit/page-edit.js");
-
-            let page = new PageEdit(this);
-            await page.init();
-            this._showPage(page, "new");
-        } catch (ex) {
-            this._showException(ex);
-        }
-    }
-
-
 
     /**
      * Interne Methode zum Umschalten der sichtbaren Seite.
