@@ -11,11 +11,24 @@ export default class PageList extends Page {
      * Konstruktor.
      *
      * @param {App} app Instanz der App-Klasse
+     * @param {Integer} editId ID des bearbeiteten Datensatzes
      */
     constructor(app) {
         super(app, HtmlTemplate);
+        
+        // Bearbeiteter Datensatz
+        this._editId = editId;
 
-        this._emptyMessageElement = null;
+        this._dataset = {
+            name: "",
+            price: "",
+            size: "",
+        };
+
+        // Eingabefelder
+        this._nameInput = null;
+        this._priceInput  = null;
+        this._sizeInput     = null;
     }
 
     /**
@@ -32,13 +45,17 @@ export default class PageList extends Page {
         // HTML-Inhalt nachladen
         await super.init();
         this._title = "Mahlzeit hinzufügen";
-        //console.log(this._app.backend.fetch("GET", "/meal"));
+/*
+        // Bearbeiteten Datensatz laden
+        if (this._editId) {
+            this._url = `/meal/${this._editId}`;
+            this._dataset = await this._app.backend.fetch("GET", this._url);
+            this._title = `${this._dataset.name}`;
 
-        /*
-        //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
-        //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
-        //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
-
+        } else {
+            this._url = `/meal`;
+            this._title = "Gericht hinzufügen";
+        }
 
         // Platzhalter im HTML-Code ersetzen
         let html = this._mainElement.innerHTML;
@@ -56,7 +73,10 @@ export default class PageList extends Page {
         this._nameInput = this._mainElement.querySelector("input.name");
         this._priceInput  = this._mainElement.querySelector("input.price");
         this._sizeInput     = this._mainElement.querySelector("input.size");
-        */
+
+
+      */
+        
     }
 
     async _saveAndExit() {
@@ -79,9 +99,17 @@ export default class PageList extends Page {
             alert("Geben Sie erst eine Größe ein.");
             return;
         }
-
-        // Datensatz speichern
-        await this._app.database.save(this._dataset);
+        
+        try {
+            if (this._editId) {
+                await this._app.backend.fetch("PUT", this._url, {body: this._dataset});
+            } else {
+                await this._app.backend.fetch("POST", this._url, {body: this._dataset});
+            }
+        } catch (ex) {
+            this._app.showException(ex);
+            return;
+        }
 
         // Zurück zur Übersicht
         location.hash = "#/";
