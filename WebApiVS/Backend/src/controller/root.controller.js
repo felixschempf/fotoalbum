@@ -4,6 +4,7 @@ import {wrapHandler} from "../utils.js";
 import path from "path";
 import { readFile } from "fs/promises";
 
+
 /**
  * Controller für die Wurzeladresse des Webservices. Ermöglicht in dieser
  * Fassung den Abruf der OpenAPI-Spezifikation unter `/openapi.yaml`.
@@ -36,7 +37,7 @@ import { readFile } from "fs/promises";
                 query: {url: "/address", method: "GET", queryParams: ["first_name", "last_name", "phone", "email"]},
                 create: {url: "/address", method: "POST"},
             },*/
-            {
+            {            
                  _name: "meal",
                  query: {url: "/meal", method: "GET", queryParams: ["name", "price", "size"]},
                  create: {url: "/meal", method: "POST"},

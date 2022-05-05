@@ -2,11 +2,39 @@
 <style>
     /* TODO: Stylesheet definieren  */
     main {
-        color: red;
+        color: black;
     }
 </style>
 
 <!-- Inhalt der Seite -->
 <main>
-    <!-- TODO: HTML-Gerüst definieren -->
+    <ol>
+        <!-- Platzhalter für eine leere Liste -->
+        <li class="empty-placeholder">
+            <div class="name">
+                Keine Einträge vorhanden
+            </div>
+        </li>
+
+        <!-- Vorlage für einen Eintrag in der Liste -->
+        <li class="list-entry" data-id="$ID$">
+            <div class="name">
+                $NAME$
+            </div>
+            <div class="price">
+                $PRICE$
+            </div>
+            <div class="size">
+                $SIZE$
+            </div>
+            <div class="actions">
+                <div class="action edit">
+                    <a>🖊️</a>
+                </div>
+                <div class="action delete">
+                    <a>🗑️</a>
+                </div>
+            </div>
+        </li>
+    </ol>
 </main>

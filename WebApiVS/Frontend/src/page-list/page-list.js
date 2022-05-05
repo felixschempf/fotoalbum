@@ -31,10 +31,41 @@ export default class PageList extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "Übersicht";
+        this._title = "Speisekarte";
+        console.log(this._app.backend.fetch("GET", "/meal"));
 
-        //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
-        //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
-        //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
+
+        let result = await this._app.backend.fetch("GET", "/meal");
+        this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
+
+        //console.log(this._app.backend.fetch("GET", "/meal"));
+
+        if (result.length) {
+            this._emptyMessageElement.classList.add("hidden");
+        }
+
+        // Je Datensatz einen Listeneintrag generieren
+        let olElement = this._mainElement.querySelector("ol");
+
+        let templateElement = this._mainElement.querySelector(".list-entry");
+        let templateHtml = templateElement.outerHTML;
+        templateElement.remove();
+
+
+        for (let index in result) {
+            // Platzhalter ersetzen
+            let dataset = result[index];
+            let html = templateHtml;
+            html = html.replace("$NAME$", dataset.name);
+            html = html.replace("$PRICE$", dataset.price);
+            html = html.replace("$SIZE$", dataset.size);
+
+            // Element in die Liste einfügen
+            let dummyElement = document.createElement("div");
+            dummyElement.innerHTML = html;
+            let liElement = dummyElement.firstElementChild;
+            liElement.remove();
+            olElement.appendChild(liElement);
+        }
     }
 };
