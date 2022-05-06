@@ -35,6 +35,13 @@ class App {
                 url: ".*",
                 show: () => this._gotoList()
             },
+            {
+                url: "^/guest/$",
+                show: () => this._gotoGuest()
+            },{
+                url: "^/guest-edit/$",
+                show: () => this._gotoGuestEdit()
+            },
         ]);
 
         // Fenstertitel merken, um später den Name der aktuellen Seite anzuhängen
@@ -85,6 +92,32 @@ class App {
             let page = new PageEdit(this);
             await page.init();
             this._showPage(page, "new");
+        } catch (ex) {
+            this._showException(ex);
+        }
+    }
+
+    async _gotoGuest() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageEdit} = await import("./page-guest/page-guest.js");
+
+            let page = new PageEdit(this);
+            await page.init();
+            this._showPage(page, "guest");
+        } catch (ex) {
+            this._showException(ex);
+        }
+    }
+
+    async _gotoGuestEdit() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageEdit} = await import("./page-guest-edit/page-guest-edit.js");
+
+            let page = new PageEdit(this);
+            await page.init();
+            this._showPage(page, "guest-edit");
         } catch (ex) {
             this._showException(ex);
         }
