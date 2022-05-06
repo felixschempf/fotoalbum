@@ -130,11 +130,11 @@ class App {
     async _gotoJob() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageJob} = await import(".page-job/page-job.js");
+            let {default: PageJob} = await import("./page-job/page-job.js");
 
             let page = new PageJob(this);
             await page.init();
-            this._showPage(page, "jobs");
+            this._showPage(page, "job");
         } catch (ex) {
             this._showException(ex);
         }

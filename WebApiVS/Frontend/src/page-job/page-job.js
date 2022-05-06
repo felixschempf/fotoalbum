@@ -31,7 +31,7 @@ export default class PageJob extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "Job";
+        this._title = "Jobs anzeigen";
         console.log(this._app.backend.fetch("GET", "/job"));
 
 
