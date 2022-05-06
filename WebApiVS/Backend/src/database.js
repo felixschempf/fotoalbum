@@ -33,10 +33,10 @@ class DatabaseFactory {
     async _createDemoData() {
         //// TODO: Methode anpassen, um zur eigenen App passende Demodaten anzulegen ////
         //// oder die Methode ggf. einfach löschen und ihren Aufruf oben entfernen.  ////
-        let address = this.database.collection("meal");
+        let meal = this.database.collection("meal");
 
-        if (await address.estimatedDocumentCount() === 0) {
-            address.insertMany([
+        if (await meal.estimatedDocumentCount() === 0) {
+            meal.insertMany([
                 {
                     name: "Pizza",
                     price: "8",
@@ -45,6 +45,34 @@ class DatabaseFactory {
                     name: "Burger",
                     price: "10",
                     size: "middle",
+                }
+            ]);
+        }
+
+        let guest = this.database.collection("guest");
+
+        if (await guest.estimatedDocumentCount() === 0) {
+            guest.insertMany([
+                {
+                    name: "Eintrag 1",
+                    text: "Das ist ein Beispieltext",
+                }, {
+                    name: "Eintrag 2",
+                    text: "Das ist ein zweiter Beispieltext",
+                }
+            ]);
+        }
+
+        let job = this.database.collection("job");
+
+        if (await job.estimatedDocumentCount() === 0) {
+            job.insertMany([
+                {
+                    work: "Koch",
+                    description: "Er bereitet das Essen zu",
+                }, {
+                    work: "Kellner",
+                    description: "Bedient die Gäste",
                 }
             ]);
         }

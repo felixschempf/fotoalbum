@@ -8,6 +8,8 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
 import MealController from "./controller/meal.controller.js";
+import GuestController from "./controller/guest.controller.js";
+import JobController from "./controller/job.controller.js";
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
@@ -91,6 +93,8 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 //// TODO: Weitere Controller-Klassen hinzufügen ////
 new RootController(server, "/", openApiFile);
 new MealController(server, "/meal");
+new GuestController(server, "/guest");
+new JobController(server, "/job");
 
 // server.get("/", function(req, res, next) {
 //     res.send(200, "Hallo, Welt!");

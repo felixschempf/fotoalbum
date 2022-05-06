@@ -1,4 +1,5 @@
 import DatabaseFactory from "../database.js";
+import { ObjectId } from "mongodb";
 
 /**
  * Fachliche Anwendungslogik für alles rund um Adressdatensätze.
@@ -53,7 +54,7 @@ export default class MealService {
      * Einzelne Werte einer Adresse überschreiben
      */
     async update(id, meal) {
-        let oldMeal = await this.meals.findeOne({_id: new ObjectId(id)});
+        let oldMeal = await this._meals.findOne({_id: new ObjectId(id)});
         if (!oldMeal) return;
 
         let updateDoc = {

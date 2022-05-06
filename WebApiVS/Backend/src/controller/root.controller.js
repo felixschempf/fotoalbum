@@ -32,11 +32,11 @@ import { readFile } from "fs/promises";
     async index(req, res, next) {
         //// TODO: Example-Collection hier durch eigene Collections ersetzen ////
         res.sendResult([
-            /*{
-                _name: "address",
-                query: {url: "/address", method: "GET", queryParams: ["first_name", "last_name", "phone", "email"]},
-                create: {url: "/address", method: "POST"},
-            },*/
+            {
+                _name: "guest",
+                query: {url: "/guest", method: "GET", queryParams: ["name", "text"]},
+                create: {url: "/guest", method: "POST"},
+            },
             {            
                  _name: "meal",
                  query: {url: "/meal", method: "GET", queryParams: ["name", "price", "size"]},

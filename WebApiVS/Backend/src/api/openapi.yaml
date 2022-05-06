@@ -164,6 +164,259 @@ paths:
           description: Not Found
       operationId: delete-meal-id
       description: Ein Meal löschen
+  /guest:
+    post:
+      summary: Eintrag posten
+      tags:
+        - Guestbook
+      responses:
+        '201':
+          description: Created
+          #### WARNING ######
+          headers:
+            location:
+              schema:
+                type: string
+          ###################
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guest'
+      operationId: post-guest
+      description: Guest hinzufügen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Guest'
+    get:
+      summary: Eintrag abrufen
+      tags:
+        - Guestbook
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Guest'
+      operationId: get-guest
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: name
+          description: gesuchter Name
+        - schema:
+            type: string
+          in: query
+          name: text
+          description: gesuchter Text
+      description: Guest suchen
+  '/guest/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Einzelnen Eintrag abrufen
+      tags:
+        - Guest
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guest'
+        '404':
+          description: Not Found
+      operationId: get-guest-id
+      description: Einzelnen Guest lesen
+    put:
+      summary: Einzelnen Eintrag ändern
+      tags:
+        - Guest
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guest'
+        '404':
+          description: Not Found
+      operationId: put-guest-id
+      description: Guest überschreiben
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Guest'
+    patch:
+      summary: Einzelnen Eintrag aktualisieren
+      tags:
+        - Guest
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guest'
+        '404':
+          description: Not Found
+      operationId: patch-guest-id
+      description: Eizelne Felder vom Guest änderen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Guest'
+    delete:
+      summary: Einzelnen Eintrag löschen
+      tags:
+        - Guest
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      operationId: delete-guest-id
+      description: Ein Guest löschen
+  /job:
+    get:
+      summary: Job anzeigen
+      tags:
+        - Joblist
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+      operationId: get-job
+      description: Job suchen
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: work
+          description: gesuchter job
+        - schema:
+            type: string
+          in: query
+          name: description
+          description: gesuchte beschreibung
+    post:
+      summary: Job anlegen
+      tags:
+        - Joblist
+      responses:
+        '201':
+          description: Created
+          #### WARNING ######
+          headers:
+            location:
+              schema:
+                type: string
+          ###################
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+      operationId: post-job
+      description: Job hinzufügen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+  '/job/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Job suchen
+      tags:
+        - Job
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '404':
+          description: Not Found
+      operationId: get-job-id
+      description: Einzelnen Job lesen
+    put:
+      summary: Job aktualisieren
+      tags:
+        - Job
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '404':
+          description: Not Found
+      operationId: put-job-id
+      description: Job überschreiben
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+    patch:
+      summary: Job ändern
+      tags:
+        - Job
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '404':
+          description: Not Found
+      operationId: patch-job-id
+      description: Eizelne Felder vom Job änderen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+    delete:
+      summary: Job löschen
+      tags:
+        - Job
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Not Found
+      operationId: delete-job-id
+      description: Ein Job löschen
 components:
   schemas:
     Meal:
@@ -224,7 +477,35 @@ components:
           type: array
           items:
             type: string
+    Guest:
+      title: Guest
+      x-stoplight:
+        id: 9zdljj933zsdn
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        text:
+          type: string
+    Job:
+      title: Job
+      x-stoplight:
+        id: tb5djsh0meli5
+      type: object
+      properties:
+        i_d:
+          type: string
+        work:
+          type: string
+        description:
+          type: string
 tags:
+  - name: Guest
+  - name: Guestbook
+  - name: Job
+  - name: Joblist
   - name: Meal
   - name: Mealcard
   - name: Start
