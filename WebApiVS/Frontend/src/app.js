@@ -31,10 +31,7 @@ class App {
                 url: "^/new/$",
                 show: () => this._gotoNew()
             },
-            {
-                url: ".*",
-                show: () => this._gotoList()
-            },
+           
             {
                 url: "^/guest/$",
                 show: () => this._gotoGuest()
@@ -45,6 +42,10 @@ class App {
             {
                 url: "^/job/$",
                 show: () => this._gotoJob()
+            },
+            {
+                url: ".*",
+                show: () => this._gotoList()
             },
 
         ]);
