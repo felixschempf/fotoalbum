@@ -42,6 +42,11 @@ class App {
                 url: "^/guest-edit/$",
                 show: () => this._gotoGuestEdit()
             },
+            {
+                url: "^/job/$",
+                show: () => this._gotoJob()
+            },
+
         ]);
 
         // Fenstertitel merken, um später den Name der aktuellen Seite anzuhängen
@@ -118,6 +123,18 @@ class App {
             let page = new PageEdit(this);
             await page.init();
             this._showPage(page, "guest-edit");
+        } catch (ex) {
+            this._showException(ex);
+        }
+    }
+    async _gotoJob() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageJob} = await import(".page-job/page-job.js");
+
+            let page = new PageJob(this);
+            await page.init();
+            this._showPage(page, "jobs");
         } catch (ex) {
             this._showException(ex);
         }

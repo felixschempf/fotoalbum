@@ -13,7 +13,7 @@ export default class PageList extends Page {
      * @param {App} app Instanz der App-Klasse
      * @param {Integer} editId ID des bearbeiteten Datensatzes
      */
-    constructor(app) {
+    constructor(app, editId) {
         super(app, HtmlTemplate);
         
         // Bearbeiteter Datensatz
@@ -45,7 +45,7 @@ export default class PageList extends Page {
         // HTML-Inhalt nachladen
         await super.init();
         this._title = "Mahlzeit hinzufügen";
-/*
+
         // Bearbeiteten Datensatz laden
         if (this._editId) {
             this._url = `/meal/${this._editId}`;
@@ -75,7 +75,7 @@ export default class PageList extends Page {
         this._sizeInput      = this._mainElement.querySelector("input.size");
 
 
-      */
+      
         
     }
 
