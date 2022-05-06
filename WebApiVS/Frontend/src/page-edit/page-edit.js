@@ -72,7 +72,7 @@ export default class PageList extends Page {
         // Eingabefelder zur späteren Verwendung merken
         this._nameInput = this._mainElement.querySelector("input.name");
         this._priceInput  = this._mainElement.querySelector("input.price");
-        this._sizeInput     = this._mainElement.querySelector("input.size");
+        this._sizeInput      = this._mainElement.querySelector("input.size");
 
 
       */
