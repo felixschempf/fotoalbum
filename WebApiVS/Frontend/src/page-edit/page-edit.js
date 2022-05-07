@@ -3,20 +3,12 @@
 import Page from "../page.js";
 import HtmlTemplate from "./page-edit.html";
 
-/**
- * Klasse PageList: Stellt die Listenübersicht zur Verfügung
- */
+
 export default class PageList extends Page {
-    /**
-     * Konstruktor.
-     *
-     * @param {App} app Instanz der App-Klasse
-     * @param {Integer} editId ID des bearbeiteten Datensatzes
-     */
-    constructor(app, editId) {
+        constructor(app, editId) {
         super(app, HtmlTemplate);
         
-        // Bearbeiteter Datensatz
+       
         this._editId = editId;
 
         this._dataset = {
@@ -25,28 +17,19 @@ export default class PageList extends Page {
             size: "",
         };
 
-        // Eingabefelder
+       
         this._nameInput = null;
         this._priceInput  = null;
         this._sizeInput     = null;
     }
 
-    /**
-     * HTML-Inhalt und anzuzeigende Daten laden.
-     *
-     * HINWEIS: Durch die geerbte init()-Methode wird `this._mainElement` mit
-     * dem <main>-Element aus der nachgeladenen HTML-Datei versorgt. Dieses
-     * Element wird dann auch von der App-Klasse verwendet, um die Seite
-     * anzuzeigen. Hier muss daher einfach mit dem üblichen DOM-Methoden
-     * `this._mainElement` nachbearbeitet werden, um die angezeigten Inhalte
-     * zu beeinflussen.
-     */
+    
     async init() {
-        // HTML-Inhalt nachladen
+        
         await super.init();
         this._title = "Mahlzeit hinzufügen";
 
-        // Bearbeiteten Datensatz laden
+        
         if (this._editId) {
             this._url = `/meal/${this._editId}`;
             this._dataset = await this._app.backend.fetch("GET", this._url);
@@ -57,7 +40,7 @@ export default class PageList extends Page {
             this._title = "Gericht hinzufügen";
         }
 
-        // Platzhalter im HTML-Code ersetzen
+        
         let html = this._mainElement.innerHTML;
         html = html.replace("$NAME$", this._dataset.name);
         html = html.replace("$PRICE$", this._dataset.price);
@@ -65,11 +48,11 @@ export default class PageList extends Page {
         this._mainElement.innerHTML = html;
 
 
-        // Event Listener registrieren
+        
         let saveButton = this._mainElement.querySelector(".action.save");
         saveButton.addEventListener("click", () => this._saveAndExit());
 
-        // Eingabefelder zur späteren Verwendung merken
+        
         this._nameInput = this._mainElement.querySelector("input.name");
         this._priceInput  = this._mainElement.querySelector("input.price");
         this._sizeInput      = this._mainElement.querySelector("input.size");
@@ -80,7 +63,7 @@ export default class PageList extends Page {
     }
 
     async _saveAndExit() {
-        // Eingegebene Werte prüfen
+        
         this._dataset.name = this._nameInput.value.trim();
         this._dataset.price  = this._priceInput.value.trim();
         this._dataset.size      = this._sizeInput.value.trim();
@@ -111,7 +94,6 @@ export default class PageList extends Page {
             return;
         }
 
-        // Zurück zur Übersicht
         location.hash = "#/";
     }
 };

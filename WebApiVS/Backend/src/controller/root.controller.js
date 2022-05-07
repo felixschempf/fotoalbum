@@ -5,18 +5,9 @@ import path from "path";
 import { readFile } from "fs/promises";
 
 
-/**
- * Controller für die Wurzeladresse des Webservices. Ermöglicht in dieser
- * Fassung den Abruf der OpenAPI-Spezifikation unter `/openapi.yaml`.
- */
+
  export default class RootController {
-    /**
-     * Konstruktor. Hier werden die URL-Handler registrert.
-     *
-     * @param {Object} server Restify Serverinstanz
-     * @param {String} prefix Gemeinsamer Prefix aller URLs
-     * @param {String} openApiFile Pfad zur OpenAPI-Beschreibung
-     */
+ 
     constructor(server, prefix, openApiFile) {
         this._openApiFile = openApiFile;
 
@@ -24,13 +15,9 @@ import { readFile } from "fs/promises";
         server.get(prefix + "openapi.yaml", wrapHandler(this, this.openApi));
     }
 
-    /**
-     * GET /:
-     * Übersicht über die vorhandenen Collections liefern (HATEOAS-Prinzip,
-     * so dass Clients die URL-Struktur des Webservices entdecken können).
-     */
+    
     async index(req, res, next) {
-        //// TODO: Example-Collection hier durch eigene Collections ersetzen ////
+       
         res.sendResult([
             {
                 _name: "guest",
@@ -42,6 +29,11 @@ import { readFile } from "fs/promises";
                  query: {url: "/meal", method: "GET", queryParams: ["name", "price", "size"]},
                  create: {url: "/meal", method: "POST"},
             },
+            {
+                _name: "job",
+                query: {url: "/job", method: "GET", queryParams: ["work", "description"]},
+                create: {url: "/job", method: "POST"},
+            }
         ]);
 
         next();

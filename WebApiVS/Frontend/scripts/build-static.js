@@ -31,12 +31,11 @@ shell.ls("-R", src_dir).forEach(file => {
     console.log(file, "=>", dst_path);
 
     if (src_stat.isDirectory()) {
-        // Create sub-directory
+  
         shell.mkdir("-p", dst_path);
     } else {
-        // Copy static file and replace variables in text files
+      
         shell.cp(src_path, dst_path);
-
         if (replace_extensions.some(extension => file.endsWith(extension))) {
             Object.keys(replace_values).forEach(key => {
                 shell.sed("-i", `%${key}%`, replace_values[key], dst_path);

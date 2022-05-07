@@ -4,12 +4,7 @@ import Page from "../page.js";
 import HtmlTemplate from "./page-job-new.html";
 
 export default class PageJobNew extends Page {
-    /**
-     * Konstruktor.
-     *
-     * @param {App} app Instanz der App-Klasse
-     * @param {Integer} editId ID des bearbeiteten Datensatzes
-     */
+   
     constructor(app, editId) {
         super(app, HtmlTemplate);
 
@@ -20,17 +15,16 @@ export default class PageJobNew extends Page {
             description: "",
         };
 
-        // Eingabefelder
         this._workInput = null;
         this._descriptionInput  = null;   
     }
     async init() {
-        // HTML-Inhalt nachladen
+        
         await super.init();
         this._title = "Jobs hinzufügen";
 
 
-        // Bearbeiteten Datensatz laden
+      
         if (this._editId) {
             this._url = `/job/${this._editId}`;
             this._dataset = await this._app.backend.fetch("GET", this._url);
@@ -41,24 +35,22 @@ export default class PageJobNew extends Page {
             this._title = "Jobs hinzufügen";
         }
 
-        // Platzhalter im HTML-Code ersetzen
+        
         let html = this._mainElement.innerHTML;
         html = html.replace("$WORK$", this._dataset.work);
         html = html.replace("$DESCRIPTION$", this._dataset.description);
         this._mainElement.innerHTML = html;
 
 
-        // Event Listener registrieren
         let jobSaveButton = this._mainElement.querySelector(".action.save");
         jobSaveButton.addEventListener("click", () => this._saveAndExit());
 
-        // Eingabefelder zur späteren Verwendung merken
         this._workInput = this._mainElement.querySelector("input.work");
         this._descriptionInput  = this._mainElement.querySelector("input.description");
         
     }
     async _saveAndExit() {
-        // Eingegebene Werte prüfen
+       
         this._dataset.work = this._workInput.value.trim();
         this._dataset.description  = this._descriptionInput.value.trim();
 
@@ -83,7 +75,7 @@ export default class PageJobNew extends Page {
             return;
         }
 
-        // Zurück zur Übersicht
+       
         location.hash = "#/job/";
     }
 };
