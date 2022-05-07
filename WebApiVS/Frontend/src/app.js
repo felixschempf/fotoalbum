@@ -45,6 +45,9 @@ class App {
                 url: "^/job/$",
                 show: () => this._gotoJob()
             },{
+                url: "^/job-new/$",
+                show: () => this._gotoJobNew()
+            },{
                 url: ".*",
                 show: () => this._gotoList()
             },
@@ -162,6 +165,19 @@ class App {
             let page = new PageJob(this);
             await page.init();
             this._showPage(page, "job");
+        } catch (ex) {
+            this._showException(ex);
+        }
+    }
+
+    async _gotoJobNew() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageJobNew} = await import("./page-job-edit/page-job-edit.js");
+
+            let page = new PageJobNew(this);
+            await page.init();
+            this._showPage(page, "job-new");
         } catch (ex) {
             this._showException(ex);
         }
