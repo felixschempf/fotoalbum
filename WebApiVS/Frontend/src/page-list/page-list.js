@@ -67,7 +67,7 @@ export default class PageList extends Page {
             liElement.remove();
             olElement.appendChild(liElement);
 
-            liElement.querySelector(".action.edit").addEventListener("click", () => location.hash = `#/new/${dataset._id}`);
+            liElement.querySelector(".action.edit").addEventListener("click", () => location.hash = `#/update/${dataset._id}`);
             liElement.querySelector(".action.delete").addEventListener("click", () => this._askDelete(dataset._id));
         }
     }

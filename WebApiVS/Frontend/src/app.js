@@ -26,24 +26,22 @@ class App {
             {
                 url: "^/$",
                 show: () => this._gotoList()
-            },
-            {
+            },{
                 url: "^/new/$",
                 show: () => this._gotoNew()
-            },
-           
-            {
+            },{
+                url: "^/update/(.*)$",
+                show: matches => this._gotoUpdate(matches[1]),
+            },{
                 url: "^/guest/$",
                 show: () => this._gotoGuest()
             },{
                 url: "^/guest-edit/$",
                 show: () => this._gotoGuestEdit()
-            },
-            {
+            },{
                 url: "^/job/$",
                 show: () => this._gotoJob()
-            },
-            {
+            },{
                 url: ".*",
                 show: () => this._gotoList()
             },
@@ -98,6 +96,18 @@ class App {
             let page = new PageEdit(this);
             await page.init();
             this._showPage(page, "new");
+        } catch (ex) {
+            this._showException(ex);
+        }
+    }
+    async _gotoUpdate(id) {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageEdit} = await import("./page-edit/page-edit.js");
+
+            let page = new PageEdit(this, id);
+            await page.init();
+            this._showPage(page, "edit");
         } catch (ex) {
             this._showException(ex);
         }
