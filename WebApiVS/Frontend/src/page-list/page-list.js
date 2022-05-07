@@ -66,6 +66,31 @@ export default class PageList extends Page {
             let liElement = dummyElement.firstElementChild;
             liElement.remove();
             olElement.appendChild(liElement);
+
+            liElement.querySelector(".action.edit").addEventListener("click", () => location.hash = `#/new/${dataset._id}`);
+            liElement.querySelector(".action.delete").addEventListener("click", () => this._askDelete(dataset._id));
+        }
+    }
+    async _askDelete(id) {
+        // Sicherheitsfrage zeigen
+        let answer = confirm("Soll die ausgewählte Speise wirklich gelöscht werden?");
+        if (!answer) return;
+
+        // Datensatz löschen
+        try {
+            this._app.backend.fetch("DELETE", `/meal/${id}`);
+        } catch (ex) {
+            this._app.showException(ex);
+            return;
+        }
+
+        // HTML-Element entfernen
+        this._mainElement.querySelector(`[data-id="${id}"]`)?.remove();
+
+        if (this._mainElement.querySelector("[data-id]")) {
+            this._emptyMessageElement.classList.add("hidden");
+        } else {
+            this._emptyMessageElement.classList.remove("hidden");
         }
     }
 };
