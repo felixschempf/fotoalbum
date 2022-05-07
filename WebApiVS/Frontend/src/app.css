@@ -22,13 +22,13 @@ html {
     html {
         
         background-color: #669ac4;
-        background-image: url(img/background.png);
+        background-image: url(img/background.jpg);
 
         font-size: 11pt;
     }
 
     body {
-        max-width: 95em;
+        max-width: 70em;
         margin: 0 auto;
         margin-top: 2em;
         margin-bottom: 2em;
@@ -42,10 +42,10 @@ html {
 nav {
     user-select: none;
 
-    background-color: #404040;
+    background-color: #000000;
     color: white;
 
-    border: 0px solid #202020;
+    border: 0px solid #7a0909;
     border-bottom-width: 3px;
 }
 
@@ -74,13 +74,13 @@ nav ul {
 
 nav li.active {
     background-color: #333333;
-    border: 0px solid rgb(33, 146, 187);
+    border: 0px solid rgb(255, 255, 255);
     border-bottom-width: 3px;
 }
 
 nav li:hover {
     background-color: #505050;
 
-    border: 0px solid rgb(103, 197, 231);
+    border: 0px solid rgb(255, 255, 255);
     border-bottom-width: 3px;
 }

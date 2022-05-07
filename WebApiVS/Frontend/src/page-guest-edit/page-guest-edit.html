@@ -1,8 +1,7 @@
-
 <style>
-  
+    
     main {
-        background-color: white;
+        background-color: rgb(2, 2, 2);
         padding: 1em;
     }
 
@@ -10,14 +9,16 @@
         display: block;
         width: 100%;
 
-        border: 0px solid lightgrey;
+        border: 0px solid rgb(75, 71, 71);
+        color: white;
+        background-color: #383737;
+
         border-bottom-width: 1px;
 
         padding: 0.5em 0 0.5em 0;
         margin-bottom: 1em;
     }
 
-   
     main .actions {
         display: flex;
         justify-content: space-between;
@@ -27,7 +28,7 @@
         padding: 0.5em;
         margin: 0.5em;
 
-        background-color: #e0e0e0;
+        background-color: #383737;
         transition: background-color 0.5s;
 
         flex: 1;
@@ -43,7 +44,7 @@
     }
 
     main .actions > div:hover {
-        background-color: #f0f0f0;
+        background-color: #757575;
         cursor: pointer;
     }
 </style>
@@ -53,7 +54,7 @@
     <div>
         <div class="form">
             <input class="name" placeholder="Name des Gastes" value="$NAME$" />
-            <input class="text" placeholder="Eintrag des Gastes value" value="$TEXT$" />
+            <input class="text" placeholder="Eintrag des Gastes" value="$TEXT$" />
             
         </div>
         <div class="actions">
