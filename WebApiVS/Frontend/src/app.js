@@ -48,6 +48,9 @@ class App {
                 url: "^/job-new/$",
                 show: () => this._gotoJobNew()
             },{
+                url: "^/update-job/(.*)$",
+                show: matches => this._gotoUpdateJob(matches[1]),
+            },{
                 url: ".*",
                 show: () => this._gotoList()
             },
@@ -169,15 +172,28 @@ class App {
             this._showException(ex);
         }
     }
+    
 
     async _gotoJobNew() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageJobNew} = await import("./page-job-edit/page-job-edit.js");
+            let {default: PageJobNew} = await import("./page-job-new/page-job-new.js");
 
             let page = new PageJobNew(this);
             await page.init();
             this._showPage(page, "job-new");
+        } catch (ex) {
+            this._showException(ex);
+        }
+    }
+    async _gotoUpdateJob(id) {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageEdit} = await import("./page-job-new/page-job-new.js");
+
+            let page = new PageEdit(this, id);
+            await page.init();
+            this._showPage(page, "update-job");
         } catch (ex) {
             this._showException(ex);
         }

@@ -1,11 +1,8 @@
 "use strict";
 
 import Page from "../page.js";
-import HtmlTemplate from "./page-job-edit.html";
+import HtmlTemplate from "./page-job-new.html";
 
-/**
- * Klasse PageList: Stellt die Listenübersicht zur Verfügung
- */
 export default class PageJobNew extends Page {
     /**
      * Konstruktor.
@@ -27,17 +24,6 @@ export default class PageJobNew extends Page {
         this._workInput = null;
         this._descriptionInput  = null;   
     }
-
-    /**
-     * HTML-Inhalt und anzuzeigende Daten laden.
-     *
-     * HINWEIS: Durch die geerbte init()-Methode wird `this._mainElement` mit
-     * dem <main>-Element aus der nachgeladenen HTML-Datei versorgt. Dieses
-     * Element wird dann auch von der App-Klasse verwendet, um die Seite
-     * anzuzeigen. Hier muss daher einfach mit dem üblichen DOM-Methoden
-     * `this._mainElement` nachbearbeitet werden, um die angezeigten Inhalte
-     * zu beeinflussen.
-     */
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
@@ -58,7 +44,6 @@ export default class PageJobNew extends Page {
         // Platzhalter im HTML-Code ersetzen
         let html = this._mainElement.innerHTML;
         html = html.replace("$WORK$", this._dataset.work);
-        console.log(this._workInput);
         html = html.replace("$DESCRIPTION$", this._dataset.description);
         this._mainElement.innerHTML = html;
 
@@ -69,15 +54,12 @@ export default class PageJobNew extends Page {
 
         // Eingabefelder zur späteren Verwendung merken
         this._workInput = this._mainElement.querySelector("input.work");
-        console.log(this._workInput);
         this._descriptionInput  = this._mainElement.querySelector("input.description");
         
     }
-
     async _saveAndExit() {
         // Eingegebene Werte prüfen
         this._dataset.work = this._workInput.value.trim();
-        console.log(this._workInput);
         this._dataset.description  = this._descriptionInput.value.trim();
 
         if (!this._dataset.work) {
