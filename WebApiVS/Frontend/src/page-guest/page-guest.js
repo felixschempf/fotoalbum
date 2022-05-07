@@ -31,14 +31,13 @@ export default class PageList extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "Speisekarte";
+        this._title = "Gästebuch";
         console.log(this._app.backend.fetch("GET", "/meal"));
 
 
-        let result = await this._app.backend.fetch("GET", "/meal");
+        let result = await this._app.backend.fetch("GET", "/guest");
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
-        //console.log(this._app.backend.fetch("GET", "/meal"));
 
         if (result.length) {
             this._emptyMessageElement.classList.add("hidden");
@@ -57,8 +56,7 @@ export default class PageList extends Page {
             let dataset = result[index];
             let html = templateHtml;
             html = html.replace("$NAME$", dataset.name);
-            html = html.replace("$PRICE$", dataset.price);
-            html = html.replace("$SIZE$", dataset.size);
+            html = html.replace("$TEXT$", dataset.text);
 
             // Element in die Liste einfügen
             let dummyElement = document.createElement("div");
