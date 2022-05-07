@@ -54,11 +54,17 @@ class DatabaseFactory {
         if (await guest.estimatedDocumentCount() === 0) {
             guest.insertMany([
                 {
-                    name: "Eintrag 1",
-                    text: "Das ist ein Beispieltext",
+                    name: "Simon Mayer",
+                    text: "Ein inneres Blumenpflücken",
                 }, {
-                    name: "Eintrag 2",
-                    text: "Das ist ein zweiter Beispieltext",
+                    name: "Felix Schempf",
+                    text: "Ich fand das Projekt mega",
+                },{
+                    name: "Johanna Simml",
+                    text: "Das ist die schönste Speisekarte",
+                },{
+                    name: "Uwe",
+                    text: "Ich bin der Uwe und ich bin auch dabei",
                 }
             ]);
         }
