@@ -71,4 +71,34 @@ export default class PageGuestEdit extends Page {
         this._textInput  = this._mainElement.querySelector("input.text");
         
     }
+
+    async _saveAndExit() {
+        // Eingegebene Werte prüfen
+        this._dataset.name = this._nameInput.value.trim();
+        this._dataset.text  = this._textInput.value.trim();
+
+        if (!this._dataset.name) {
+            alert("Geben Sie erst einen Namen ein.");
+            return;
+        }
+
+        if (!this._dataset.text) {
+            alert("Geben Sie erst einen Text ein.");
+            return;
+        }
+        
+        try {
+            if (this._editId) {
+                await this._app.backend.fetch("PUT", this._url, {body: this._dataset});
+            } else {
+                await this._app.backend.fetch("POST", this._url, {body: this._dataset});
+            }
+        } catch (ex) {
+            this._app.showException(ex);
+            return;
+        }
+
+        // Zurück zur Übersicht
+        location.hash = "#/guest/";
+    }
 };

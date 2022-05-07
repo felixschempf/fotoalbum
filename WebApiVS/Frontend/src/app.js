@@ -39,6 +39,9 @@ class App {
                 url: "^/guest-edit/$",
                 show: () => this._gotoGuestEdit()
             },{
+                url: "^/updateGuest/(.*)$",
+                show: matches => this._gotoUpdateGuest(matches[1]),
+            },{
                 url: "^/job/$",
                 show: () => this._gotoJob()
             },{
@@ -136,6 +139,17 @@ class App {
             await page.init();
             console.log("gotToGuest");
             this._showPage(page, "guest-edit");
+        } catch (ex) {
+            this._showException(ex);
+        }
+    }
+    async _gotoUpdateGuest(id) {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageGuestEdit} = await import("./page-guest-edit/page-guest-edit.js");
+            let page = new PageGuestEdit(this, id);
+            await page.init();
+            this._showPage(page, "updateGuest");
         } catch (ex) {
             this._showException(ex);
         }
