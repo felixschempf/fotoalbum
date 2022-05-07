@@ -6,16 +6,26 @@ import HtmlTemplate from "./page-guest-edit.html";
 /**
  * Klasse PageList: Stellt die Listenübersicht zur Verfügung
  */
-export default class PageList extends Page {
+export default class PageGuestEdit extends Page {
     /**
      * Konstruktor.
      *
      * @param {App} app Instanz der App-Klasse
+     * @param {Integer} editId ID des bearbeiteten Datensatzes
      */
-    constructor(app) {
+    constructor(app, editId) {
         super(app, HtmlTemplate);
 
-        this._emptyMessageElement = null;
+        this._editId = editId;
+
+        this._dataset = {
+            name: "",
+            text: "",
+        };
+
+        // Eingabefelder
+        this._nameInput = null;
+        this._textInput  = null;   
     }
 
     /**
@@ -32,40 +42,33 @@ export default class PageList extends Page {
         // HTML-Inhalt nachladen
         await super.init();
         this._title = "In Gästebuch eintragen";
-        console.log(this._app.backend.fetch("GET", "/meal"));
 
 
-        let result = await this._app.backend.fetch("GET", "/meal");
-        this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
+        // Bearbeiteten Datensatz laden
+        if (this._editId) {
+            this._url = `/guest/${this._editId}`;
+            this._dataset = await this._app.backend.fetch("GET", this._url);
+            this._title = `${this._dataset.name}`;
 
-        //console.log(this._app.backend.fetch("GET", "/meal"));
-
-        if (result.length) {
-            this._emptyMessageElement.classList.add("hidden");
+        } else {
+            this._url = `/guest`;
+            this._title = "Gästebuch-Eintrag hinzufügen";
         }
 
-        // Je Datensatz einen Listeneintrag generieren
-        let olElement = this._mainElement.querySelector("ol");
+        // Platzhalter im HTML-Code ersetzen
+        let html = this._mainElement.innerHTML;
+        html = html.replace("$NAME$", this._dataset.name);
+        html = html.replace("$TEXT$", this._dataset.text);
+        this._mainElement.innerHTML = html;
 
-        let templateElement = this._mainElement.querySelector(".list-entry");
-        let templateHtml = templateElement.outerHTML;
-        templateElement.remove();
 
+        // Event Listener registrieren
+        let guestSaveButton = this._mainElement.querySelector(".action.save");
+        guestSaveButton.addEventListener("click", () => this._saveAndExit());
 
-        for (let index in result) {
-            // Platzhalter ersetzen
-            let dataset = result[index];
-            let html = templateHtml;
-            html = html.replace("$NAME$", dataset.name);
-            html = html.replace("$PRICE$", dataset.price);
-            html = html.replace("$SIZE$", dataset.size);
-
-            // Element in die Liste einfügen
-            let dummyElement = document.createElement("div");
-            dummyElement.innerHTML = html;
-            let liElement = dummyElement.firstElementChild;
-            liElement.remove();
-            olElement.appendChild(liElement);
-        }
+        // Eingabefelder zur späteren Verwendung merken
+        this._nameInput = this._mainElement.querySelector("input.name");
+        this._textInput  = this._mainElement.querySelector("input.text");
+        
     }
 };

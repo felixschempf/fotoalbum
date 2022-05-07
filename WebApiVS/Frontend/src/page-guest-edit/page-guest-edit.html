@@ -8,33 +8,16 @@
 
 <!-- Inhalt der Seite -->
 <main>
-    <ol>
-        <!-- Platzhalter für eine leere Liste -->
-        <li class="empty-placeholder">
-            <div class="name">
-                Keine Einträge vorhanden
+    <div>
+        <div class="form">
+            <input class="name" placeholder="Name des Gastes" value="$NAME$" />
+            <input class="text" placeholder="Eintrag des Gastes value="$TEXT$" />
+            
+        </div>
+        <div class="actions">
+            <div class="action save">
+                <a>💾</a>
             </div>
-        </li>
-
-        <!-- Vorlage für einen Eintrag in der Liste -->
-        <li class="list-entry" data-id="$ID$">
-            <div class="name">
-                $NAME$
-            </div>
-            <div class="price">
-                $PRICE$
-            </div>
-            <div class="size">
-                $SIZE$
-            </div>
-            <div class="actions">
-                <div class="action edit">
-                    <a>🖊️</a>
-                </div>
-                <div class="action delete">
-                    <a>🗑️</a>
-                </div>
-            </div>
-        </li>
-    </ol>
+        </div>
+    </div>
 </main>

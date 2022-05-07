@@ -129,10 +129,12 @@ class App {
     async _gotoGuestEdit() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
-            let {default: PageEdit} = await import("./page-guest-edit/page-guest-edit.js");
-
-            let page = new PageEdit(this);
+            let {default: PageGuestEdit} = await import("./page-guest-edit/page-guest-edit.js");
+            
+            let page = new PageGuestEdit(this);
+            
             await page.init();
+            console.log("gotToGuest");
             this._showPage(page, "guest-edit");
         } catch (ex) {
             this._showException(ex);
