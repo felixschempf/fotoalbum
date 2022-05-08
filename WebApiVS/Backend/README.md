@@ -1,8 +1,6 @@
 SPA/REST-Vorlage: Backend
 =========================
 
-__TODO: Dokument überarbeiten__
-
 Inhaltsverzeichnis
 ------------------
 

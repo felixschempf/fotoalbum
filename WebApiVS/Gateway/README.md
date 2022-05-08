@@ -1,8 +1,6 @@
 SPA/REST-Vorlage: Gateway
 =========================
 
-__TODO: Dokument überarbeiten__
-
 Inhaltsverzeichnis
 ------------------
 

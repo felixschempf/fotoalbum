@@ -1,8 +1,6 @@
 Grundgerüst: SPA mit REST-Backend
 =================================
 
-__TODO: Dokument überarbeiten__
-
 Inhaltsverzeichnis
 ------------------
 
@@ -12,30 +10,12 @@ Inhaltsverzeichnis
  1. [Start einzelner Services mit und ohne Docker](#start-einzelner-services-mit-und-ohne-docker)
  1. [Hinwes zu Podman unter Linux](#hinweis-zu-podman-unter-linux)
 
-Kurzbeschreibung
+Kurzbeschreibung der Speisekarte
 ----------------
+Unsere Web-APP bietet die Möglichkeit für ein Restaurant, eine Speisekarte zu erstellen, indem einzelne Speisen hinzugefügt, verändert und gelöscht werden können. Von jeder Speise wird der Name, der Preis sowie die Größe angegeben. Zudem kann das Restaurant, ausgewählten Gästen die Möglichkeit bieten, sich in ein Gästebuch einzutragen. Auch hier gibt es die Möglichkeit diesen Eintrag hinzuzufügen, ihn zu ändern und wieder zu löschen. Neben seinem Namen kann der Gast hier zudem eine Botschaft hinterlassen. Außerdem verfügt die Web-APP über eine eigene Jobübersicht, in der alle aktuell ausgeschriebenen Stellen inklusive Beschreibung aufgeführt werden. 
 
-Bei diesem Projekt handelt es sich um eine vom Adressbuchbeispiel abgeleitete
-Vorlage, die Sie zur Erstellung eigener Single Page Apps mit REST-Backend
-verwenden können. Im Gegensatz zum Original werden hier nicht Adressen sondern
-Beispiele verwaltet. :-) Zum Übernehmen gehen Sie wie folgt vor:
+Github Repository: https://github.com/felixschempf/speisekarte
 
- 1. Kopieren Sie den Inhalt dieses Verzeichnisses in ein neues Verzeichnis
-    für die zu erstellende App (außerhalb dieses Git-Repositories)
-
- 1. Kopieren Sie die Datei `.gitignore` aus dem Wurzelverzeichnis dieses
-    Git-Repositories in das eben kopierte Verzeichnis.
-
- 1. Legen Sie ein neues Git-Repository an und commited Sie den kopierten
-    Quellcode. Bei Bedarf laden Sie das Repository auf GitHub hoch.
-
- 1. Lesen Sie sich die README-Dateien, den Quellcode und die darin enthaltenen
-    Kommentare sorgfältig durch.
-
- 1. Suchen Sie mit Ihrem Editor nach allen Vorkommen des Worts TODO im
-    gesamten Quellverzeichnis, um die anzupassenden Stellen zu ermitteln.
-
- 1. Passen Sie die README-Dateien an oder ersetzen diese durch eigene Dateien.
 
 Mit Docker und Docker Compose können die Bestandteile der App einzeln oder
 als Gesamtprojekt ausgeführt werden.
